@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
     build-essential cmake pkg-config libapr1-dev autoconf automake libtool curl libc6 libboost-all-dev debconf libomp5 libstdc++6 \
     libqt5core5a libqt5xml5 libqt5gui5 libqt5widgets5 libqt5concurrent5 libqt5opengl5 libcap2 libusb-1.0-0 libatk-adaptor neovim \
     python3-pip python3-tornado python3-dev python3-numpy python3-virtualenv libpcl-dev libgoogle-glog-dev libgflags-dev libatlas-base-dev \
-    libsuitesparse-dev python3-pcl pcl-tools libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev \
+    libsuitesparse-dev python3-pcl pcl-tools libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev tree \
     libpng-dev libtiff-dev libdc1394-22-dev xfce4-terminal &&\
     rm -rf /var/lib/apt/lists/*
 
@@ -62,15 +62,18 @@ RUN pip3 install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.
 ENV TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6+PTX"
     
 # OpenPCDet
-RUN pip3 install numpy==1.23.0 llvmlite numba tensorboardX easydict pyyaml scikit-image tqdm SharedArray open3d mayavi av2 kornia pyquaternion
-RUN pip3 install spconv-cu116
+RUN pip3 install numpy==1.23.0 llvmlite numba tensorboardX easydict pyyaml scikit-image tqdm SharedArray open3d mayavi av2 kornia==0.6.5 pyquaternion
+RUN pip3 install spconv-cu116 nuscenes-devkit==1.0.5
 
-RUN git clone https://github.com/open-mmlab/OpenPCDet.git
+# Clone OpenPCDet into /root
+RUN git clone https://github.com/open-mmlab/OpenPCDet.git /root/OpenPCDet
 
-WORKDIR OpenPCDet
+# Set the working directory to /root/OpenPCDet
+WORKDIR /root/OpenPCDet
 
 RUN python3 setup.py develop
-    
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
 WORKDIR /
 
 ENV NVIDIA_VISIBLE_DEVICES="all" \
