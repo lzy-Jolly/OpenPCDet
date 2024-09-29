@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 RUN  apt-get install -y \
     python3-pip python3-tornado python3-dev python3-numpy python3-virtualenv libpcl-dev libgoogle-glog-dev libgflags-dev libatlas-base-dev \
     libsuitesparse-dev python3-pcl pcl-tools libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev \
-    libpng-dev libtiff-dev libdc1394-22-dev xfce4-terminal tmux tree
+    libpng-dev libtiff-dev libdc1394-22-dev xfce4-terminal tmux tree rsync
 
 # RUN to clean up the apt cache
 RUN rm -rf /var/lib/apt/lists/*
