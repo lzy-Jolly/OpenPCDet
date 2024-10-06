@@ -14,6 +14,11 @@ RUN apt-get update && apt-get install -y \
     libpng-dev libtiff-dev libdc1394-22-dev xfce4-terminal tmux tree rsync &&\
     rm -rf /var/lib/apt/lists/*
 
+
+# For CUDA 11.3
+RUN pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
+ENV TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6+PTX"
+
 # OpenPCDet
 RUN pip install numpy==1.23.0 llvmlite numba tensorboardX easydict pyyaml scikit-image tqdm SharedArray open3d mayavi av2 kornia==0.6.5 pyquaternion -i https://pypi.tuna.tsinghua.edu.cn/simple
 RUN pip install spconv-cu113 nuscenes-devkit==1.0.5 -i https://pypi.tuna.tsinghua.edu.cn/simple
