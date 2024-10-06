@@ -15,8 +15,8 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 
 # OpenPCDet
-RUN pip3 install numpy==1.23.0 llvmlite numba tensorboardX easydict pyyaml scikit-image tqdm SharedArray open3d mayavi av2 kornia==0.6.5 pyquaternion -i https://pypi.tuna.tsinghua.edu.cn/simple
-RUN pip3 install spconv-cu113 nuscenes-devkit==1.0.5 -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip install numpy==1.23.0 llvmlite numba tensorboardX easydict pyyaml scikit-image tqdm SharedArray open3d mayavi av2 kornia==0.6.5 pyquaternion -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip install spconv-cu113 nuscenes-devkit==1.0.5 -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 
 
@@ -33,18 +33,18 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /root
 RUN git clone https://github.com/open-mmlab/OpenPCDet.git && \
     cd OpenPCDet && \
-    pip3 install -r requirements.txt && \
+    pip install -r requirements.txt && \
     python3 setup.py develop && \
-    python3 setup.py
+ 
 
 # 克隆 pc-corrector 仓库到 /root 目录下，并安装其依赖
 WORKDIR /root
 RUN git clone https://github.com/quan-dao/pc-corrector.git && \
     cd pc-corrector && \
-    pip3 install -r requirements.txt && \
-    pip3 install python-git-info einops torch_scatter torchmetrics==0.9 && \
+    pip install -r requirements.txt && \
+    pip install python-git-info einops torch_scatter torchmetrics==0.9 && \
     python3 setup.py develop --user && \
-    pip3 cache purge  # 清理 pip 缓存
+    pip cache purge  # 清理 pip 缓存
 
 # 设置工作目录为根目录
 WORKDIR /
