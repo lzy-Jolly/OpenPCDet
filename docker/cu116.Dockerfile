@@ -68,8 +68,8 @@ RUN pip3 install spconv-cu116 nuscenes-devkit==1.0.5
 RUN pip3 install \
     python-git-info \
     einops \
-    torch_scatter \
-    torchmetrics==0.9 && \
+    torchmetrics==0.9 \
+    torch_scatter && \
     pip3 cache purge  # 清理 pip 缓存
 
 # Clone OpenPCDet into /root
